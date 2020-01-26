@@ -59,9 +59,9 @@ class PoemaPage extends Component {
     })
     if (req.data.success) {
       this.setState({ title: req.data.data.title, lyrics: req.data.data.text, creator: req.data.data.creator })
-    }
-    if(!!this.props.user.liked.find(r => r._id === this.props.match.params.id)) {
-      this.setState({userLiked: true})
+      if(this.props.user && !!this.props.user.liked.find(r => r._id === this.props.match.params.id)) {
+        this.setState({userLiked: true})
+      }
     }
   }
 
@@ -85,16 +85,18 @@ class PoemaPage extends Component {
             }) : null}
         </div>
         {
-          this.props.loged && !this.state.userLiked ?
+          this.props.loged ?
+          !this.state.userLiked ?
             <Button variant="outline-dark" onClick={this.like} >
               Нравится
           </Button> : <Button variant="outline-dark" onClick={this.like} >
               Не Нравится
           </Button>
+          : null
         }
         {
           this.props.user && this.props.user._id === this.state.creator ?
-            <Button style={{paddingLeft: 30}} variant="outline-danger" onClick={this.delete} >
+            <Button style={{marginLeft: 30}} variant="outline-danger" onClick={this.delete} >
               Удалить
           </Button> : null
         }

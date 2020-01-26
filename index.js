@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
-const dotenv = require('dotenv')
+const dotenv = require('dotenv').config()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
@@ -17,12 +17,12 @@ app.use(bodyParser.json())
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/poems', require('./routes/poems'))
 
-
-//нужно позже пофиксить, чтобы было только для production мода
-app.use('/', express.static(path.join(__dirname, 'client', 'build')))
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-})
+if (process.env.NODE_ENV === 'production') {
+  app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 const PORT = process.env.PORT || 4000
 

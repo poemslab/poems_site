@@ -27,7 +27,7 @@ class AuthPage extends Component {
 
   render() {
     return (
-      <div className="auth_container">
+      <div className="auth_container container">
         {
           this.props.message ?
           <Alert variant={this.props.color}>
