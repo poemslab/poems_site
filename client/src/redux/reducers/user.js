@@ -17,7 +17,8 @@ export default function crypto(state = initialState, action) {
     case SET_LOG_OUT:
       return {
         ...state,
-        loged: false
+        loged: false,
+        user: null
       }
     case SET_MESSAGE:
       return {

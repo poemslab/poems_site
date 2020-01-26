@@ -82,7 +82,8 @@ export function setLogOut() {
   return {
     type: SET_LOG_OUT,
     payload: {
-      loading: false
+      loading: false,
+      user: null
     }
   }
 }
