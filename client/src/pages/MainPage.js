@@ -51,7 +51,7 @@ class MainPage extends Component {
           <Modal.Header closeButton>
             <Modal.Title>Уважаемый пользователь!</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Рекомендуем вам установить нашу мобильную версию сайта. Скачать можете <a target="_blank" href="/builds/app.apk">тут</a> (только для android)</Modal.Body>
+          <Modal.Body>Рекомендуем вам установить нашу мобильную версию сайта. Скачать можете <a rel="noopener noreferrer" target="_blank" href="/builds/app.apk">тут</a> (только для android)</Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
               Хорошо
