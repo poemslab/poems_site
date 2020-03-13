@@ -65,7 +65,7 @@ class MainPage extends Component {
               this.state.poems.map((r, i) => {
                 return (
                   <li key={i}>
-                    <NavLink to={`/poema/${r._id}`}>{r.title}</NavLink>
+                    <NavLink to={`/poema/${r._id}`}>{r.author} - {r.title}</NavLink>
                   </li>
                 )
               })

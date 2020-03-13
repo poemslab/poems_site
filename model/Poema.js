@@ -1,6 +1,10 @@
 const { Schema, model, Types } = require('mongoose')
 
 const schema = new Schema({
+  author: {
+    type: String,
+    required: true
+  },
   title: {
     type: String,
     required: true
@@ -16,6 +20,15 @@ const schema = new Schema({
   creator: {
     type: Types.ObjectId,
     ref: 'User'
+  },
+  category: {
+    type: String,
+    required: true,
+    default: 'Современные'
+  },
+  likes: {
+    type: Number,
+    default: 0
   }
 })
 

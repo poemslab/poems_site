@@ -12,7 +12,8 @@ class PoemaPage extends Component {
     message: null,
     color: null,
     creator: null,
-    userLiked: false
+    userLiked: false,
+    author: null
   }
 
   componentDidMount() {
@@ -58,7 +59,7 @@ class PoemaPage extends Component {
       validateStatus: false
     })
     if (req.data.success) {
-      this.setState({ title: req.data.data.title, lyrics: req.data.data.text, creator: req.data.data.creator })
+      this.setState({ title: req.data.data.title, lyrics: req.data.data.text, creator: req.data.data.creator, author: req.data.data.author })
       if(this.props.user && !!this.props.user.liked.find(r => r._id === this.props.match.params.id)) {
         this.setState({userLiked: true})
       }
@@ -69,7 +70,7 @@ class PoemaPage extends Component {
     return (
       <div style={{ marginTop: 30 }} className="container">
         <Helmet>
-          <title>{this.state.title}</title>
+          <title> {this.state.author} - {this.state.title}</title>
         </Helmet>
         {
           this.state.message ?
@@ -78,7 +79,7 @@ class PoemaPage extends Component {
             </Alert> : null
         }
         <div>
-          <h1>{this.state.title}</h1>
+          <h1>{this.state.author} - {this.state.title}</h1>
           {this.state.lyrics ?
             this.state.lyrics.split('\n').map((r, i) => {
               return <p key={i}>{r}</p>

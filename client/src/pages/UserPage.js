@@ -11,7 +11,8 @@ class UserPage extends Component {
     title: '',
     lyrics: '',
     message: null,
-    color: null
+    color: null,
+    author: ''
   }
 
   componentWillMount() {
@@ -31,7 +32,8 @@ class UserPage extends Component {
       url: '/api/poems/create',
       data: {
         title: this.state.title,
-        text: this.state.lyrics
+        text: this.state.lyrics,
+        author: this.state.author
       },
       headers: {
         authorization: `Bearer ${token}`
@@ -41,7 +43,7 @@ class UserPage extends Component {
     if (!req.data.success) {
       return this.setState({ message: req.data.message, color: 'danger' })
     }
-    this.setState({ title: '', lyrics: '', message: req.data.message, color: 'success' })
+    this.setState({ title: '', lyrics: '', author: '', message: req.data.message, color: 'success' })
   }
 
   render() {
@@ -63,8 +65,12 @@ class UserPage extends Component {
               <Form.Control as="textarea" rows="3" name="lyrics" value={this.state.lyrics} onChange={this.handleChange} />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Введите автора и название стиха</Form.Label>
-              <Form.Control type="text" placeholder="Автор и название" name="title" value={this.state.title} onChange={this.handleChange} />
+              <Form.Label>Введите автора</Form.Label>
+              <Form.Control type="text" placeholder="Заголовок" name="title" value={this.state.title} onChange={this.handleChange} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Введите автора</Form.Label>
+              <Form.Control type="text" placeholder="Автор" name="author" value={this.state.author} onChange={this.handleChange} />
             </Form.Group>
           </div>
           <Button variant="outline-dark" onClick={this.sendRequest} >

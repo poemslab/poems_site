@@ -6,6 +6,13 @@ const User = require('../model/User')
 const { Types } = require('mongoose')
 
 router.get('/list', async (req, res) => {
+  if(req.query.limit) {
+    const getPoemas = await Poems.find().limit(parseInt(req.query.limit))
+    return res.json({
+      success: true,
+      data: getPoemas
+    })
+  }
   const getPoemas = await Poems.find()
   res.json({
     success: true,
@@ -14,7 +21,7 @@ router.get('/list', async (req, res) => {
 })
 
 router.put('/create', auth, async (req, res) => {
-  const { title, thumbnail, text } = req.body
+  const { title, thumbnail, text, author } = req.body
   if (!title) {
     return res.status(400).json({
       success: false,
@@ -27,7 +34,13 @@ router.put('/create', auth, async (req, res) => {
       message: 'Вы не указали текст стиха'
     })
   }
-  const create = await Poems.create({title, thumbnail, text, creator: req.user.userId})
+  if (!author) {
+    return res.status(400).json({
+      success: false,
+      message: 'Вы не указали автора стиха'
+    })
+  }
+  const create = await Poems.create({title, thumbnail, text, creator: req.user.userId, author})
   res.status(200).json({
     success: true,
     message: 'Вы успешно добавили стих на сайт'
@@ -58,6 +71,12 @@ router.post('/like/:id', auth, async (req, res) => {
   }
   const findUser = await User.findById(req.user.userId)
   const poema = await Poems.findById(req.params.id)
+  if(!poema) {
+    return res.status(400).json({
+      success: false,
+      message: 'Стих не найден'
+    })
+  }
   if(!!findUser.liked.find(r => r.title === poema.title)) {
     const removeLike = await User.findByIdAndUpdate(req.user.userId, {$pull: {liked: {_id: poema._id, title: poema.title}}})
     return res.status(201).json({
@@ -81,7 +100,12 @@ router.delete('/delete/:id', auth, async (req, res) => {
     })
   }
   if(Types.ObjectId(findPoema.creator).equals(Types.ObjectId(req.user.userId))) {
-    const deletePoema = await Poems.findByIdAndDelete(req.params.id)
+    await Poems.findByIdAndDelete(req.params.id)
+    console.log(req.params.id)
+    const findupdate = await User.find({liked: {_id: Types.ObjectId(req.params.id)}})
+    console.log(findupdate)
+    const update = await User.updateMany({$pull: {liked: {_id: Types.ObjectId(req.params.id)}}})
+    console.log(update)
     res.json({
       success: true,
       message: 'Стих удален'
