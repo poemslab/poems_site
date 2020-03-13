@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const router = Router()
+require("dotenv").config();
 const User = require('../model/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -64,10 +65,11 @@ router.post('/login', [
     })
   }
 
+  console.log(process.env.SECRET)
   const token = jwt.sign(
     { userId: findUser.id },
     process.env.SECRET,
-    { expiresIn: '1h' }
+    { expiresIn: '1w' }
   )
 
   res.json({

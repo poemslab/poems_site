@@ -66,11 +66,11 @@ class UserPage extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Введите автора</Form.Label>
-              <Form.Control type="text" placeholder="Заголовок" name="title" value={this.state.title} onChange={this.handleChange} />
+              <Form.Control type="text" placeholder="Автор" name="author" value={this.state.author} onChange={this.handleChange} />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Введите автора</Form.Label>
-              <Form.Control type="text" placeholder="Автор" name="author" value={this.state.author} onChange={this.handleChange} />
+              <Form.Label>Введите заголовок</Form.Label>
+              <Form.Control type="text" placeholder="Заголовок" name="title" value={this.state.title} onChange={this.handleChange} />
             </Form.Group>
           </div>
           <Button variant="outline-dark" onClick={this.sendRequest} >

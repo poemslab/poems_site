@@ -21,11 +21,17 @@ router.get('/list', async (req, res) => {
 })
 
 router.put('/create', auth, async (req, res) => {
-  const { title, thumbnail, text, author } = req.body
+  const { title, thumbnail, text, author, category } = req.body
   if (!title) {
     return res.status(400).json({
       success: false,
       message: 'Вы не указали заголовок'
+    })
+  }
+  if (!category) {
+    return res.status(400).json({
+      success: false,
+      message: 'Вы не указали категорию'
     })
   }
   if (!text) {
@@ -40,7 +46,7 @@ router.put('/create', auth, async (req, res) => {
       message: 'Вы не указали автора стиха'
     })
   }
-  const create = await Poems.create({title, thumbnail, text, creator: req.user.userId, author})
+  const create = await Poems.create({title, thumbnail, text, creator: req.user.userId, author, category})
   res.status(200).json({
     success: true,
     message: 'Вы успешно добавили стих на сайт'
