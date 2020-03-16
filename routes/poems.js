@@ -100,7 +100,7 @@ router.post('/like/:id', auth, async (req, res) => {
     })
   }
   const find = await User.findByIdAndUpdate(req.user.userId, {$push: {liked: {_id: poema._id, title: poema.title, author: poema.author}}})
-  await Poems.findByIdAndUpdate(req.user.userId, {$inc: {likes: 1}})
+  await Poems.findByIdAndUpdate(req.params.id, {$inc: {likes: 1}})
   res.status(201).json({
     success: true,
     message: 'Вы добавили в понравившийся этот стих'
