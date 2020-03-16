@@ -16,7 +16,7 @@ router.post('/register', [
   }
   const { email, password } = req.body
 
-  const findUser = await User.findOne({ email })
+  const findUser = await User.findOne({ email: email.toLowerCase() })
 
   if (findUser) {
     return res.status(400).json({
@@ -47,7 +47,7 @@ router.post('/login', [
   }
   const { email, password } = req.body
 
-  const findUser = await User.findOne({ email })
+  const findUser = await User.findOne({ email: email.toLowerCase() })
 
   if (!findUser) {
     return res.status(400).json({
@@ -64,10 +64,8 @@ router.post('/login', [
       message: 'Неверный логин или пароль'
     })
   }
-
-  console.log(process.env.SECRET)
   const token = jwt.sign(
-    { userId: findUser.id },
+    { userId: findUser.id, email: findUser.email },
     process.env.SECRET,
     { expiresIn: '1w' }
   )

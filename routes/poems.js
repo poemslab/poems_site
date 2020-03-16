@@ -3,6 +3,7 @@ const router = Router()
 const auth = require('../middleware/auth')
 const Poems = require('../model/Poema')
 const User = require('../model/User')
+const Category = require('../model/Category')
 const { Types } = require('mongoose')
 
 router.get('/list', async (req, res) => {
@@ -46,6 +47,13 @@ router.put('/create', auth, async (req, res) => {
       message: 'Вы не указали автора стиха'
     })
   }
+  const findCategory = await Category.findOne({name: category})
+  if(!findCategory) {
+    return res.status(400).json({
+      success: false,
+      message: 'Вы не указали категорию'
+    })
+  }
   const create = await Poems.create({title, thumbnail, text, creator: req.user.userId, author, category})
   res.status(200).json({
     success: true,
@@ -85,12 +93,14 @@ router.post('/like/:id', auth, async (req, res) => {
   }
   if(!!findUser.liked.find(r => r.title === poema.title)) {
     const removeLike = await User.findByIdAndUpdate(req.user.userId, {$pull: {liked: {_id: poema._id, title: poema.title}}})
+    await Poems.findByIdAndUpdate(req.user.userId, {$inc: {likes: -1}})
     return res.status(201).json({
       success: true,
       message: 'Вы убрали этот стих из понравившихся'
     })
   }
   const find = await User.findByIdAndUpdate(req.user.userId, {$push: {liked: {_id: poema._id, title: poema.title}}})
+  await Poems.findByIdAndUpdate(req.user.userId, {$inc: {likes: 1}})
   res.status(201).json({
     success: true,
     message: 'Вы добавили в понравившийся этот стих'
@@ -126,9 +136,16 @@ router.delete('/delete/:id', auth, async (req, res) => {
 
 router.get('/my', auth, async (req, res) => {
   const find = await User.findById(req.user.userId)
+  const findPoems = await Poems.find({creator: Types.ObjectId(req.user.userId)})
+  console.log(req.user)
   res.status(201).json({
     success: true,
-    data: find
+    data: {
+      liked: find.liked,
+      you: findPoems,
+      id: req.user.userId,
+      email: req.user.email
+    }
   })
 })
 
