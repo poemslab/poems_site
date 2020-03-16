@@ -93,7 +93,7 @@ router.post('/like/:id', auth, async (req, res) => {
   }
   if(!!findUser.liked.find(r => r.title === poema.title)) {
     const removeLike = await User.findByIdAndUpdate(req.user.userId, {$pull: {liked: {_id: poema._id, title: poema.title, author: poema.author}}})
-    await Poems.findByIdAndUpdate(req.user.userId, {$inc: {likes: -1}})
+    await Poems.findByIdAndUpdate(req.params.id, {$inc: {likes: -1}})
     return res.status(201).json({
       success: true,
       message: 'Вы убрали этот стих из понравившихся'
