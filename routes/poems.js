@@ -92,14 +92,14 @@ router.post('/like/:id', auth, async (req, res) => {
     })
   }
   if(!!findUser.liked.find(r => r.title === poema.title)) {
-    const removeLike = await User.findByIdAndUpdate(req.user.userId, {$pull: {liked: {_id: poema._id, title: poema.title}}})
+    const removeLike = await User.findByIdAndUpdate(req.user.userId, {$pull: {liked: {_id: poema._id, title: poema.title, author: poema.author}}})
     await Poems.findByIdAndUpdate(req.user.userId, {$inc: {likes: -1}})
     return res.status(201).json({
       success: true,
       message: 'Вы убрали этот стих из понравившихся'
     })
   }
-  const find = await User.findByIdAndUpdate(req.user.userId, {$push: {liked: {_id: poema._id, title: poema.title}}})
+  const find = await User.findByIdAndUpdate(req.user.userId, {$push: {liked: {_id: poema._id, title: poema.title, author: poema.author}}})
   await Poems.findByIdAndUpdate(req.user.userId, {$inc: {likes: 1}})
   res.status(201).json({
     success: true,
@@ -137,7 +137,6 @@ router.delete('/delete/:id', auth, async (req, res) => {
 router.get('/my', auth, async (req, res) => {
   const find = await User.findById(req.user.userId)
   const findPoems = await Poems.find({creator: Types.ObjectId(req.user.userId)})
-  console.log(req.user)
   res.status(201).json({
     success: true,
     data: {
