@@ -14,6 +14,20 @@ router.get('/list', async (req, res) => {
       data: getPoemas
     })
   }
+  if(req.query.category) {
+    const findCategory = await Category.find()
+    if(category.name.toLowerCase() === req.query.category.toLowerCase()) {
+      const getPoemas = await Poems.find()
+      return res.json({
+        success: true,
+        data: getPoemas
+      })
+    }
+    res.status(400).json({
+      success: false,
+      message: 'Категория не найдена'
+    })
+  }
   const getPoemas = await Poems.find()
   res.json({
     success: true,
