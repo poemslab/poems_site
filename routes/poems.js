@@ -16,8 +16,8 @@ router.get('/list', async (req, res) => {
   }
   if(req.query.category) {
     const findCategory = await Category.find()
-    if(category.name.toLowerCase() === req.query.category.toLowerCase()) {
-      const getPoemas = await Poems.find()
+    if(!!findCategory.find(r => r.name.toLowerCase() === req.query.category.toLowerCase())) {
+      const getPoemas = await Poems.find({category: req.query.category.toLowerCase()})
       return res.json({
         success: true,
         data: getPoemas
@@ -61,7 +61,7 @@ router.put('/create', auth, async (req, res) => {
       message: 'Вы не указали автора стиха'
     })
   }
-  const findCategory = await Category.findOne({name: category})
+  const findCategory = await Category.findOne({name: category.toLowerCase()})
   if(!findCategory) {
     return res.status(400).json({
       success: false,

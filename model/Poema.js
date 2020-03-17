@@ -24,7 +24,7 @@ const schema = new Schema({
   category: {
     type: String,
     required: true,
-    default: 'Современные'
+    default: 'cовременные'
   },
   likes: {
     type: Number,
