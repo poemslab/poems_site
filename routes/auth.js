@@ -65,7 +65,7 @@ router.post('/login', [
     })
   }
   const token = jwt.sign(
-    { userId: findUser.id, email: findUser.email },
+    { userId: findUser.id, email: findUser.email, mod: findUser.moderator },
     process.env.SECRET,
     { expiresIn: '1w' }
   )

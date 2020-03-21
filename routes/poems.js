@@ -129,13 +129,11 @@ router.delete('/delete/:id', auth, async (req, res) => {
       message: 'Стих не найден'
     })
   }
-  if(Types.ObjectId(findPoema.creator).equals(Types.ObjectId(req.user.userId))) {
+  console.log(req.user.mod)
+  if(Types.ObjectId(findPoema.creator).equals(Types.ObjectId(req.user.userId)) || req.user.mod) {
     await Poems.findByIdAndDelete(req.params.id)
-    console.log(req.params.id)
     const findupdate = await User.find({liked: {_id: Types.ObjectId(req.params.id)}})
-    console.log(findupdate)
     const update = await User.updateMany({$pull: {liked: {_id: Types.ObjectId(req.params.id)}}})
-    console.log(update)
     res.json({
       success: true,
       message: 'Стих удален'

@@ -6,6 +6,16 @@ const schema = new Schema({
     required: true,
     unique: true
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    default: `user${Math.floor(Math.random() * 1000000) + 1}`
+  },
+  moderator: {
+    type: Boolean,
+    default: false
+  },
   password: {
     type: String,
     required: true
