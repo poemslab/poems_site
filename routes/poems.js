@@ -129,7 +129,6 @@ router.delete('/delete/:id', auth, async (req, res) => {
       message: 'Стих не найден'
     })
   }
-  console.log(req.user.mod)
   if(Types.ObjectId(findPoema.creator).equals(Types.ObjectId(req.user.userId)) || req.user.mod) {
     await Poems.findByIdAndDelete(req.params.id)
     const findupdate = await User.find({liked: {_id: Types.ObjectId(req.params.id)}})
@@ -147,7 +146,13 @@ router.delete('/delete/:id', auth, async (req, res) => {
 })
 
 router.get('/my', auth, async (req, res) => {
-  const find = await User.findById(req.user.userId)
+  const find = await User.findById(req.user.userId)\
+  if(!find) {
+    return res.status(401).json({
+      success: false,
+      message: 'Вы не авторизованы'
+    })
+  }
   const findPoems = await Poems.find({creator: Types.ObjectId(req.user.userId)})
   res.status(201).json({
     success: true,
@@ -155,7 +160,8 @@ router.get('/my', auth, async (req, res) => {
       liked: find.liked,
       you: findPoems,
       id: req.user.userId,
-      email: req.user.email
+      email: req.user.email,
+      mod: req.user.mod
     }
   })
 })
