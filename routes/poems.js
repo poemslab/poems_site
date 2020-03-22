@@ -146,7 +146,7 @@ router.delete('/delete/:id', auth, async (req, res) => {
 })
 
 router.get('/my', auth, async (req, res) => {
-  const find = await User.findById(req.user.userId)\
+  const find = await User.findById(req.user.userId)
   if(!find) {
     return res.status(401).json({
       success: false,
