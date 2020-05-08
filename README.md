@@ -1,2 +1,2 @@
-# mern_poems_site
+# Poems lab - Лаборатория стихов
 Сайт, куда можно добавлять стихи. Opensource
