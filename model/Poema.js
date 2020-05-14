@@ -29,6 +29,9 @@ const schema = new Schema({
   likes: {
     type: Number,
     default: 0
+  },
+  comments: {
+    type: Array
   }
 })
 

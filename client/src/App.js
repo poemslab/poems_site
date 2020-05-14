@@ -3,16 +3,21 @@ import { useRoutes } from './routes';
 import AppNavbar from './components/Navbar';
 import { connect } from 'react-redux';
 import { getMe } from './redux/actions/action';
+import ReactGA from 'react-ga';
+import MainPage from './pages/MainPage';
+
+ReactGA.initialize('UA-161987514-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App(props) {
   props.getMe()
   const isAuthenticated = props.loged
   const router = useRoutes(isAuthenticated)
   return (
-    <div>
-      <AppNavbar/>
+    <>
+      <AppNavbar />
       {router}
-    </div>
+    </>
   )
 }
 

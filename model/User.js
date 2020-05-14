@@ -22,6 +22,10 @@ const schema = new Schema({
   },
   liked: {
     type: Array
+  },
+  avatar: {
+    type: String,
+    default: null
   }
 })
 

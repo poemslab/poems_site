@@ -1,8 +1,8 @@
 import React from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
-import { Navbar, Button, Nav, NavDropdown } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setLogOut } from '../redux/actions/action'
+import Button from './Button'
 
 function AppNavbar(props) {
   const history = useHistory()
@@ -11,23 +11,29 @@ function AppNavbar(props) {
     history.push('/')
   }
   return (
-    <Navbar bg="dark" variant="dark">
-      <NavLink to="/" ><Navbar.Brand>Стихи</Navbar.Brand></NavLink>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-
-        </Nav>
-        {
-          props.loged ?
-            <NavDropdown title="Меню" id="basic-nav-dropdown">
-              <NavLink to="/me" ><NavDropdown.Item as="div" >Ваши стихи</NavDropdown.Item></NavLink>
-              <NavDropdown.Divider /> 
-              <NavDropdown.Item onClick={() => logOut()}>Выйти</NavDropdown.Item>
-            </NavDropdown> : <NavLink to="/auth"><Button variant="light">Войти</Button></NavLink>
-        }
-      </Navbar.Collapse>
-    </Navbar>
+    <div className='navbar container'>
+      <div>
+        <a href="/">
+          <img src={require('../assets/logo.png')}/>
+        </a>
+      </div>
+      <div className='list'>
+        <ul>
+          <li>
+            <a href="https://play.google.com/store/apps/details?id=com.poemslab">Скачать приложение</a>
+          </li>
+          <li>
+            <a href="#">О нас</a>
+          </li>
+          <li>
+            <a href="#">Контакты</a>
+          </li>
+          <li>
+            <Button>Создать аккаунт</Button>
+          </li>
+        </ul>
+      </div>
+    </div>
   )
 }
 

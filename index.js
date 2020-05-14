@@ -10,12 +10,15 @@ mongoose.connect('mongodb://localhost:27017/stihi-site', { useNewUrlParser: true
   console.log('Connected to database')
 })
 
+app.use(require('prerender-node'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.disable('x-powered-by')
 
 //ROUTES
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/poems', require('./routes/poems'))
+app.use('/api/users', require('./routes/users'))
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))
@@ -27,5 +30,5 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 4000
 
 app.listen(PORT, () => {
-  console.log('App ready')
+  console.log(`App ready on port ${PORT}`)
 })

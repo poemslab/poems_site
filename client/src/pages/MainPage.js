@@ -1,88 +1,62 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import axios from 'axios'
-import { NavLink } from 'react-router-dom'
-import { Modal, Button } from 'react-bootstrap'
+import React from 'react'
+import Block from '../components/Block'
+import Button from '../components/Button'
 
-class MainPage extends Component {
-  state = {
-    poems: [],
-    showModal: false
-  }
-
-  componentDidMount() {
-    this.getPoems()
-    function detectMob() {
-      const toMatch = [
-        /Android/i,
-        /webOS/i,
-        /BlackBerry/i,
-        /Windows Phone/i
-      ];
-
-      return toMatch.some((toMatchItem) => {
-        return navigator.userAgent.match(toMatchItem);
-      });
-    }
-    if(detectMob()) {
-      this.setState({showModal: true})
-    }
-  }
-
-  async getPoems() {
-    const request = await axios({
-      method: 'get',
-      url: '/api/poems/list',
-      validateStatus: false
-    })
-    if (request.data.success) {
-      this.setState({ poems: request.data.data })
-    }
-  }
-
-  handleClose = () => {
-    this.setState({showModal: false})
-  }
-
-  render() {
-    return (
-      <div className="container">
-        <Modal show={this.state.showModal} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Уважаемый пользователь!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Рекомендуем вам установить нашу мобильную версию сайта. Скачать можете <a rel="noopener noreferrer" target="_blank" href="https://play.google.com/store/apps/details?id=com.poemslab">тут</a> (только для android)</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Хорошо
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        <div className="main_title">
-          <h3>Список стихов</h3>
-          <ol style={{ marginTop: 30 }}>
-            {
-              this.state.poems.map((r, i) => {
-                return (
-                  <li key={i}>
-                    <NavLink to={`/poema/${r._id}`}>{r.author} - {r.title}</NavLink>
-                  </li>
-                )
-              })
-            }
-          </ol>
+export default function MainPage() {
+  return (
+    <div className='container'>
+      <section className='welcome_section'>
+        <Block />
+        <div className='pr'>
+          <div style={{ marginTop: 60 }}>
+            <p className='title'>Всегда мечтал стать популярным автором?</p>
+          </div>
+          <div style={{ marginTop: 30 }}>
+            <p className='subtitle'>Наша платформа поможет начинающим авторам приобрести себе аудиторию, развиться, а так же показать свои способности!</p>
+          </div>
+          <div style={{ marginTop: 50 }}>
+            <Button>Попробовать бесплатно</Button>
+          </div>
         </div>
-      </div>
-    )
-  }
+      </section>
+      <section style={{ marginTop: '40vh' }} className='about_section '>
+        <div style={{left: -1350, top: -100}} className='block'></div>
+        <div>
+          <div style={{width: '700px'}}>
+            <p className='title orangeGradient'>
+              Poems lab - это то, что ты искал!
+            </p>
+            <p className='subtitle'>
+              Ниже представлены только самые важные аспекты которые включает наше полностью <span className='bold'>Бесплатное</span> приложение
+            </p>
+          </div>
+          <div style={{marginTop: 90}} className='arrow'>
+            <img src={require('../assets/arrow.png')} />
+          </div>
+          <div className='list'>
+            <div>
+              <img src={require('../assets/phone.png')} />
+              <p className='title purpleGradient'>Мультиплатформенность</p>
+              <p className='subtitle'>Работает везде, не только на телефонах, компьютерах, а даже у Вари..</p>
+            </div>
+            <div>
+              <img src={require('../assets/feather.png')} />
+              <p className='title redGradient'>Маленький вес</p>
+              <p className='subtitle'>Наше приложение весит как пушинка! Ну или как сигарета Миши! Смотря с чем сравнивать..</p>
+            </div>
+            <div>
+              <img src={require('../assets/web.png')} />
+              <p className='title blueGradient'>Безграничность</p>
+              <p className='subtitle'>Делай что тебе вздумается, тебя ничего не ограничевает! <span className='bold'>Кроме списка правил!</span></p>
+            </div>
+            <div>
+              <img src={require('../assets/shield.png')} />
+              <p className='title greenGradient'>Безопасность</p>
+              <p className='subtitle'>Весь контент в приложении проходит наистражайшую модерацию, так что контент 0+ точно не пройдёт!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
 }
-
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage)

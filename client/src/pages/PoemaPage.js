@@ -68,7 +68,7 @@ class PoemaPage extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: 30 }} className="container">
+      <div style={{ marginTop: 30 }}>
         <Helmet>
           <title> {this.state.author} - {this.state.title}</title>
         </Helmet>
