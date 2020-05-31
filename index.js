@@ -19,6 +19,7 @@ app.disable('x-powered-by')
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/poems', require('./routes/poems'))
 app.use('/api/users', require('./routes/users'))
+app.use('/api/categories', require('./routes/categories'))
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))

@@ -1,0 +1,9 @@
+.input_field {
+  input:focus + label {
+    color: #EE9441 !important;
+  }
+  input:focus {
+    border-bottom: 1px solid #EE9441 !important;
+    box-shadow: 0 1px 0 0 #EE9441 !important
+  }
+}

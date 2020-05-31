@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
   name: {
@@ -6,6 +6,10 @@ const schema = new Schema({
     required: true
   },
   description: {
+    type: String,
+    default: null
+  },
+  color: {
     type: String,
     default: null
   }

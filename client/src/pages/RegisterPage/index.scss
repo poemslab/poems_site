@@ -1,0 +1,37 @@
+.auth {
+  display: flex;
+  justify-content: center;
+  margin-top: 90px;
+  min-height: 59vh;
+}
+
+.block {
+  padding: 25px 100px;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+
+  h1 {
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 51px;
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+  }
+}
+
+.btn {
+  cursor: pointer;
+  transition: color .3s;
+  &:hover {
+    color: #0686c4;
+  }
+}
+
+.alert {
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: #fff ;
+}

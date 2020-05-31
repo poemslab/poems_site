@@ -1,0 +1,36 @@
+.navbar {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  background: #FFFFFF;
+  width: 41px;
+  height: 41px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  font-size: 24px;
+  line-height: 38px;
+  cursor: pointer;
+  margin-right: 35px;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 61px;
+  height: 61px;
+  cursor: pointer;
+}

@@ -1,0 +1,86 @@
+.card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  width: 300px;
+  height: 250px;
+  cursor: pointer;
+  animation-delay: 1s;
+  transition: .3s;
+  padding: 10px;
+  text-decoration: none;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
+  -webkit-animation-name: Bounce;
+  animation-name: Bounce;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+
+  &:hover {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    -webkit-animation-timing-function: cubic-bezier(.075,.82,.165,1);
+    animation-timing-function: cubic-bezier(.075,.82,.165,1);
+    box-shadow: 2px 6px 20px 4px rgba(0,0,0,.10);
+  }
+}
+
+.card_body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card_image {
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.card_left {
+  max-width: 200px;
+}
+
+.title {
+  color: #000000;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: normal;
+}
+
+.subtitle {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  color: #A3A3A3;
+  max-height: 25px;
+}
+
+.card_left_bottom {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.card_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.card_left_bottom_text {
+  color: #000000;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  margin-left: 5px;
+}
+
+.circle {
+  width: 60px;
+  height: 60px;
+  background-color: #F29F5B;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

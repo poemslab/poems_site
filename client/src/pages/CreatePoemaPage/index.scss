@@ -1,0 +1,30 @@
+.grid {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+}
+
+.block {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 24px;
+}
+
+.input_field {
+  textarea:focus + label {
+    color: #EE9441 !important;
+  }
+  textarea:focus {
+    border-bottom: 1px solid #EE9441 !important;
+    box-shadow: 0 1px 0 0 #EE9441 !important
+  }
+}
+
+.mt {
+  margin-top: 40px;
+}
+
+.alert {
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: #fff;
+}

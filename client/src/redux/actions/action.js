@@ -45,7 +45,7 @@ export function getMe() {
     const token = localStorage.getItem('token')
     const req = await axios({
       method: 'get',
-      url: '/api/poems/my',
+      url: '/api/users/me',
       headers: {
         authorization: `Bearer ${token}`
       },

@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-import { Button, Alert } from 'react-bootstrap'
+import styles from './index.scss'
+import Button from '../../components/Button'
 
 class PoemaPage extends Component {
   state = {
@@ -13,7 +14,10 @@ class PoemaPage extends Component {
     color: null,
     creator: null,
     userLiked: false,
-    author: null
+    author: null,
+    thumbnail: null,
+    likes: 0,
+    disabled: false
   }
 
   componentDidMount() {
@@ -49,7 +53,7 @@ class PoemaPage extends Component {
     if (!req.data.success) {
       return this.setState({ message: req.data.message, color: 'danger' })
     }
-    this.setState({ message: req.data.message, color: 'success' })
+    this.props.history.push('/')
   }
 
   getInfo = async () => {
@@ -59,7 +63,7 @@ class PoemaPage extends Component {
       validateStatus: false
     })
     if (req.data.success) {
-      this.setState({ title: req.data.data.title, lyrics: req.data.data.text, creator: req.data.data.creator, author: req.data.data.author })
+      this.setState({ title: req.data.data.title, likes: req.data.data.likes, thumbnail: req.data.data.thumbnail, success: true, lyrics: req.data.data.text, creator: req.data.data.creator, author: req.data.data.author })
       if(this.props.user && !!this.props.user.liked.find(r => r._id === this.props.match.params.id)) {
         this.setState({userLiked: true})
       }
@@ -68,39 +72,47 @@ class PoemaPage extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: 30 }}>
-        <Helmet>
-          <title> {this.state.author} - {this.state.title}</title>
-        </Helmet>
+      <div className={styles.page}>
         {
-          this.state.message ?
-            <Alert variant={this.state.color}>
-              {this.state.message}
-            </Alert> : null
+          this.state.success ? 
+          <Helmet>
+            <title> {this.state.author} - {this.state.title}</title>
+          </Helmet> : null
+
         }
-        <div>
-          <h1>{this.state.author} - {this.state.title}</h1>
+        <div className={styles.lyrics}>
           {this.state.lyrics ?
-            this.state.lyrics.split('\n').map((r, i) => {
+            this.state.lyrics.split(/(\n)|(↵)/g).map((r, i) => {
+              if(r === '\n' || r === '↵' || r === undefined) return
               return <p key={i}>{r}</p>
             }) : null}
         </div>
-        {
-          this.props.loged ?
-          !this.state.userLiked ?
-            <Button variant="outline-dark" onClick={this.like} >
-              Нравится
-          </Button> : <Button variant="outline-dark" onClick={this.like} >
-              Не Нравится
-          </Button>
-          : null
-        }
-        {
-          this.props.user && this.props.user._id === this.state.creator ?
-            <Button style={{marginLeft: 30}} variant="outline-danger" onClick={this.delete} >
-              Удалить
-          </Button> : null
-        }
+        <div className={styles.sticky}>
+          <div className={styles.info}>
+            <img alt='alt' src={this.state.thumbnail || 'https://i.imgur.com/u7otRoX.png'} />
+            <div className={styles.info_body}>
+              <div>
+                <p className={styles.title}>{this.state.author}</p>
+                <p className={styles.subtitle}>{this.state.title}</p>
+                <p className={styles.subtitle}>Лайков: <span>{this.state.likes}</span></p>
+              </div>
+              {
+                this.props.loged ? 
+                <div className={styles.btn_block}>
+                  {/* {
+                    !this.state.userLiked ? 
+                    <Button onClick={this.like} type='orange' className={styles.btn}>Лайкнуть</Button>
+                    : <Button onClick={this.like} type='orange' className={styles.btn}>Убрать лайк</Button>
+                  } */}
+                  {
+                    this.props.user && this.props.user.id === this.state.creator ? 
+                    <Button onClick={this.delete} type='dark'>Удалить</Button> : null
+                  }
+                </div> : null
+              }
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

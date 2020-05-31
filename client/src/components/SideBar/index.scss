@@ -1,0 +1,56 @@
+.sidebar {
+  background-color: #FFFFFF;
+  width: 250px;
+  height: 100%;
+  padding: 23px 0px 23px 20px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  p {
+    margin-top: 70px;
+    font-size: 18px;
+    color: #878787;
+    line-height: 27px;
+    font-weight: 500;
+  }
+  ul li {
+    margin-top: 38px;
+    a {
+      color: #A3A3A3;
+      font-size: 15px;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s linear;
+    }
+    &:hover {
+      a {
+        color: #EE9441;
+      }
+    }
+  }
+}
+
+.links {
+  display: flex;
+}
+
+.btn {
+  margin-right: 20px;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 23px;
+  a {
+    color: #A3A3A3;
+    font-size: 17px;
+    font-weight: 300;
+    cursor: pointer;
+  }
+  &:hover {
+    a {
+      color: #EE9441;
+    }
+  }
+}

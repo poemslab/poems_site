@@ -1,0 +1,64 @@
+.category {
+  width: 100%;
+  height: 100px;
+  border-radius: 15px;
+  margin-top: 25px;
+  display: flex;
+  background-color: #fff;
+  align-items: center;
+  transition: .3s;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
+  -webkit-animation-name: Bounce;
+  animation-name: Bounce;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+
+  &:hover {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    -webkit-animation-timing-function: cubic-bezier(.075,.82,.165,1);
+    animation-timing-function: cubic-bezier(.075,.82,.165,1);
+    box-shadow: 2px 6px 20px 4px rgba(0,0,0,.10);
+  }
+}
+
+.category_logo {
+  min-width: 95px;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.icon {
+  color: #fff;
+}
+
+.category_body {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 25px;
+  width: 75%;
+}
+
+.category_title {
+  font-size: 16px;
+  line-height: 25px;
+  color: #000000;
+}
+
+.category_subtitle {
+  font-size: 12px;
+  line-height: 17px;
+  color: #878787;
+}
+
+.category_circle {
+  min-width: 45px;
+  min-height: 45px;
+  max-width: 45px;
+  max-height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
