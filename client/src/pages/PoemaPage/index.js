@@ -105,7 +105,7 @@ class PoemaPage extends Component {
                     : <Button onClick={this.like} type='orange' className={styles.btn}>Убрать лайк</Button>
                   } */}
                   {
-                    this.props.user && this.props.user.id === this.state.creator ? 
+                    this.props.user && this.props.user.id === this.state.creator || this.props.user && this.props.user.mod ? 
                     <Button onClick={this.delete} type='dark'>Удалить</Button> : null
                   }
                 </div> : null
