@@ -38,3 +38,13 @@ ul {
 a {
 	text-decoration: none;
 }
+
+.app {
+	margin: 31px 31px 31px 281px;
+}
+
+@media(max-width: 1050px) {
+	.app {
+		margin: 31px;
+	}
+}

@@ -27,13 +27,20 @@ class CategoryPage extends Component {
 
   render() {
     return (
-      <div className={styles.page}>
-        {
-          this.state.items.length > 0 ? 
-          this.state.items.map(r => (
-            <Card className={styles.margin} key={r._id} to={`/poema/${r._id}`} title={r.title} author={r.author} likes={r.likes} thumbnail={r.thumbnail} />
-          )) : <p>Стихи не найдены</p>
-        }
+      <div>
+        <div className={styles.grid}>
+          <div className={styles.page}>
+            {
+              this.state.items.length > 0 ? 
+              this.state.items.map(r => (
+                <Card className={styles.margin} key={r._id} to={`/poema/${r._id}`} title={r.title} author={r.author} likes={r.likes} thumbnail={r.thumbnail} />
+              )) : <p>Стихи не найдены</p>
+            }
+          </div>
+          <div>
+            stata
+          </div>
+        </div>
       </div>
     )
   }

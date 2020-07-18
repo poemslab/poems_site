@@ -2,10 +2,29 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .margin {
-  margin-right: 5px;
-  margin-top: 5px;
+  margin-right: 20px;
+  margin-top: 10px;
+  &:nth-child(3n) {
+    margin-right: 0px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 9fr 3fr;
+  margin-top: 53px;
+  column-gap: 43px;
+}
+
+@media (min-width: 1209px) {
+  .margin {
+
+    &:nth-child(3n) {
+      margin-right: 20px;
+    }
+  }
 }

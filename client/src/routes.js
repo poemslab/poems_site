@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import CategoryPage from './pages/CategoryPage'
 import CreatePoemaPage from './pages/CreatePoemaPage'
+import AllCategoriesPage from './pages/AllCategoriesPage'
 
 export const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
@@ -21,6 +22,9 @@ export const useRoutes = (isAuthenticated) => {
         </Route>
         <Route path="/createpoema" exact>
           <CreatePoemaPage />
+        </Route>
+        <Route path="/categories" exact>
+          <AllCategoriesPage />
         </Route>
         <Route path="/poema/:id">
           <PoemaPage />
@@ -42,6 +46,9 @@ export const useRoutes = (isAuthenticated) => {
       </Route>
       <Route path="/register" exact>
         <RegisterPage />
+      </Route>
+      <Route path="/categories" exact>
+        <AllCategoriesPage />
       </Route>
       <Route path="/poema/:id">
         <PoemaPage />

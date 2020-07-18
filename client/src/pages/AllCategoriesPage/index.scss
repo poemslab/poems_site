@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+  margin-top: 53px;
+  grid-column-gap: 43px;
+  column-gap: 43px;
+}
+
+.stats {
+  padding: 20px;
+  background-color: #fff;
+  max-height: 100px;
+  margin-top: 25px;
+  border-radius: 15px;
+}

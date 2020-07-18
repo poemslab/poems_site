@@ -10,9 +10,31 @@
   min-height: 170px;
   background: #FFD9B8;
   border-radius: 15px;
-  padding: 30px 50px;
+  padding: 30px 70px;
   display: flex;
   justify-content: space-between;
+
+  a {
+    color: #ecf0f1;
+    text-decoration: underline;
+    transition: .2s all;
+    
+    &:hover {
+      color: #bdc3c7;
+    }
+  }
+}
+
+.alert--red {
+  background: #F25C5C;
+
+  .alert_title {
+    color: #fff
+  }
+
+  .alert_subtitle {
+    color: #fff;
+  }
 }
 
 .alert_title {
@@ -38,10 +60,6 @@
 
 .bold {
   font-weight: bold;
-}
-
-.favourite_section {
-  margin-top: 65px;
 }
 
 .section_title_block {
@@ -75,4 +93,9 @@
   width: 50%;
   margin-right: 5px;
   margin-top: 40px;
+}
+
+.slider {
+  --content-background-color: #f4f7fc !important;
+  --organic-arrow-height: 25px !important;
 }

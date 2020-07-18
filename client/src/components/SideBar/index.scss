@@ -6,6 +6,7 @@
   position: fixed;
   top: 0px;
   left: 0px;
+  z-index: 9999;
   p {
     margin-top: 70px;
     font-size: 18px;
@@ -45,7 +46,7 @@
   a {
     color: #A3A3A3;
     font-size: 17px;
-    font-weight: 300;
+    font-weight: 300; 
     cursor: pointer;
   }
   &:hover {
@@ -53,4 +54,10 @@
       color: #EE9441;
     }
   }
+}
+
+.mobile { 
+  display: inline-block;
+  margin: 31px;
+  cursor: pointer;
 }
