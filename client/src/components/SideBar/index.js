@@ -17,7 +17,9 @@ function AppNavbar(props) {
   useEffect(() => {
     function handleClickOutside(event) {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setOpen(false)
+        if(window.innerWidth < 1050 && open) {
+          setOpen(false)
+        }
       }
     }
 
