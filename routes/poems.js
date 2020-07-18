@@ -19,19 +19,37 @@ const createRateLimit = rateLimit({
 
 router.get('/list', async (req, res) => {
   if (req.query.limit) {
-    const getPoemas = await Poems.find().limit(parseInt(req.query.limit))
+    const getPoemas = await Poems.find().limit(parseInt(req.query.limit)).lean()
+    const poemas = await Promise.all(getPoemas.map(async p => {
+      const likes = await User.find({ liked: p._id }).countDocuments()
+
+      return {
+        ...p,
+        likes
+      }
+    }))
+
     return res.json({
       success: true,
-      data: getPoemas
+      data: poemas
     })
   }
   if (req.query.category) {
     const findCategory = await Category.find()
     if (!!findCategory.find(r => r.name.toLowerCase() === req.query.category.toLowerCase())) {
-      const getPoemas = await Poems.find({ category: req.query.category.toLowerCase() })
+      const getPoemas = await Poems.find({ category: req.query.category.toLowerCase() }).lean()
+      const poemas = await Promise.all(getPoemas.map(async p => {
+        const likes = await User.find({ liked: p._id }).countDocuments()
+
+        return {
+          ...p,
+          likes
+        }
+      }))
+      
       return res.json({
         success: true,
-        data: getPoemas
+        data: poemas
       })
     }
     res.status(400).json({
@@ -39,10 +57,19 @@ router.get('/list', async (req, res) => {
       message: 'Категория не найдена'
     })
   }
-  const getPoemas = await Poems.find()
-  res.json({
+  const getPoemas = await Poems.find().lean()
+  const poemas = await Promise.all(getPoemas.map(async p => {
+    const likes = await User.find({ liked: p._id }).countDocuments()
+
+    return {
+      ...p,
+      likes
+    }
+  }))
+
+  return res.json({
     success: true,
-    data: getPoemas
+    data: poemas
   })
 })
 
@@ -79,7 +106,8 @@ router.put('/create', auth, createRateLimit, async (req, res) => {
       message: 'Вы не указали категорию'
     })
   }
-  const create = await Poems.create({ title, thumbnail, text, creator: req.user.userId, author, category: category.toLowerCase() })
+  
+  await Poems.create({ title, thumbnail, text, creator: req.user.userId, author, category: category.toLowerCase() })
   res.status(200).json({
     success: true,
     message: 'Вы успешно добавили стих на сайт'
@@ -87,11 +115,17 @@ router.put('/create', auth, createRateLimit, async (req, res) => {
 })
 
 router.get('/get/:id', async (req, res) => {
-  const find = await Poems.findById(req.params.id)
+  const find = await Poems.findById(req.params.id).lean()
   if (find) {
+    // we need to cache it, but this project doesn't use redis or memcached
+    const likes = await User.find({ liked: find._id }).countDocuments()
+
     res.status(201).json({
       success: true,
-      data: find
+      data: {
+        ...find,
+        likes
+      }
     })
   } else {
     res.status(400).json({
@@ -174,7 +208,7 @@ router.post('/like/:id', auth, async (req, res) => {
       message: 'Стих не найден'
     })
   }
-  const findUser = await User.findById(req.user.userId)
+
   const poema = await Poems.findById(req.params.id)
   if (!poema) {
     return res.status(400).json({
@@ -182,16 +216,18 @@ router.post('/like/:id', auth, async (req, res) => {
       message: 'Стих не найден'
     })
   }
-  if (!!findUser.liked.find(r => r.title === poema.title)) {
-    const removeLike = await User.findByIdAndUpdate(req.user.userId, { $pull: { liked: poema } })
-    await Poems.findByIdAndUpdate(req.params.id, { $inc: { likes: -1 } })
+
+  const hasLike = await User.find({ _id: req.user.userId, liked: poema._id })
+
+  if (hasLike.length > 0) {
+    await User.findByIdAndUpdate(req.user.userId, { $pull: { liked: poema._id } })
     return res.status(201).json({
       success: true,
       message: 'Вы убрали этот стих из понравившихся'
     })
   }
-  const find = await User.findByIdAndUpdate(req.user.userId, { $push: { liked: poema } })
-  await Poems.findByIdAndUpdate(req.params.id, { $inc: { likes: 1 } })
+  
+  await User.findByIdAndUpdate(req.user.userId, { $push: { liked: poema._id } })
   res.status(201).json({
     success: true,
     message: 'Вы добавили в понравившийся этот стих'
@@ -208,8 +244,7 @@ router.delete('/delete/:id', auth, async (req, res) => {
   }
   if (Types.ObjectId(findPoema.creator).equals(Types.ObjectId(req.user.userId)) || req.user.mod) {
     await Poems.findByIdAndDelete(req.params.id)
-    const findupdate = await User.find({ liked: { _id: Types.ObjectId(req.params.id) } })
-    const update = await User.updateMany({ $pull: { liked: { _id: Types.ObjectId(req.params.id) } } })
+    await User.updateMany({ $pull: { liked: { _id: Types.ObjectId(req.params.id) } } })
     res.json({
       success: true,
       message: 'Стих удален'
