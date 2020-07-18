@@ -26,10 +26,6 @@ const schema = new Schema({
     required: true,
     default: 'cовременные'
   },
-  likes: {
-    type: Number,
-    default: 0
-  },
   comments: {
     type: Array
   }

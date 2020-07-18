@@ -4,8 +4,13 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    if(req.user.mod) {
+    if (req.user.mod) {
       next()
+    } else {
+      res.status(401).json({
+        success: false,
+        message: 'Вы не авторизованы'
+      }) 
     }
   } catch (error) {
     res.status(401).json({

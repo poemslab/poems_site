@@ -2,18 +2,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { withRouter } from 'react-router-dom'
+import { getMe } from '../../redux/actions/action'
 import axios from 'axios'
 import styles from './index.scss'
 import Button from '../../components/Button'
 
 class PoemaPage extends Component {
   state = {
+    _id: null,
     title: null,
     lyrics: null,
     message: null,
     color: null,
     creator: null,
-    userLiked: false,
     author: null,
     thumbnail: null,
     likes: 0,
@@ -37,7 +38,10 @@ class PoemaPage extends Component {
     if (!req.data.success) {
       return this.setState({ message: req.data.message, color: 'danger' })
     }
-    this.setState(state => ({ message: req.data.message, color: 'success', userLiked: !state.userLiked }))
+
+    this.getInfo() // Update likes count
+    this.props.getMe() // Update user for get new likes array
+    this.setState(state => ({ message: req.data.message, color: 'success' }))
   }
 
   delete = async () => {
@@ -63,10 +67,7 @@ class PoemaPage extends Component {
       validateStatus: false
     })
     if (req.data.success) {
-      this.setState({ title: req.data.data.title, likes: req.data.data.likes, thumbnail: req.data.data.thumbnail, success: true, lyrics: req.data.data.text, creator: req.data.data.creator, author: req.data.data.author })
-      if(this.props.user && !!this.props.user.liked.find(r => r._id === this.props.match.params.id)) {
-        this.setState({userLiked: true})
-      }
+      this.setState({ _id: req.data.data._id, title: req.data.data.title, likes: req.data.data.likes, thumbnail: req.data.data.thumbnail, success: true, lyrics: req.data.data.text, creator: req.data.data.creator, author: req.data.data.author })
     }
   }
 
@@ -99,11 +100,11 @@ class PoemaPage extends Component {
               {
                 this.props.loged ? 
                 <div className={styles.btn_block}>
-                  {/* {
-                    !this.state.userLiked ? 
+                  {
+                    !(this.props.user && this.props.user.liked.includes(this.state._id)) ? 
                     <Button onClick={this.like} type='orange' className={styles.btn}>Лайкнуть</Button>
                     : <Button onClick={this.like} type='orange' className={styles.btn}>Убрать лайк</Button>
-                  } */}
+                  }
                   {
                     this.props.user && this.props.user.id === this.state.creator || this.props.user && this.props.user.mod ? 
                     <Button onClick={this.delete} type='dark'>Удалить</Button> : null
@@ -123,4 +124,10 @@ const mapStateToProps = state => ({
   user: state.user.user
 })
 
-export default connect(mapStateToProps)(withRouter(PoemaPage))
+const mapDispatchToProps = dispatch => {
+  return {
+    getMe: () => dispatch(getMe())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PoemaPage))
