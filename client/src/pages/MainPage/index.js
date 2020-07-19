@@ -75,7 +75,7 @@ export default class MainPage extends Component {
               <div>
                 {
                   this.state.categories.length > 0 ?
-                    this.state.categories.map(r => (<Category key={r._id} color={r.color} title={r.name} subtitle={r.description} to={`/category/${r.name}`} className={styles.card} />))
+                    this.state.categories.map(r => (<Category key={r._id} color={r.color} title={r.name} subtitle={r.description} to={`/category/${r.name}`} />))
                     : <p>Категории не найдены</p>
                 }
               </div>

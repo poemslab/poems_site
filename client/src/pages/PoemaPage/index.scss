@@ -5,7 +5,7 @@
   margin-right: 80px;
   display: grid;
   grid-template-columns: 3fr 1fr;
-  column-gap: 100px;
+  column-gap: 20px;
 
   p {
     margin-top: 5px;
@@ -67,7 +67,7 @@
   margin-right: 10px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
   .page {
     margin: 0px;
     grid-template-columns: 0px;
