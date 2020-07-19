@@ -5,7 +5,6 @@ body, p, ul, li, h1, h2, h3, h4, h5 {
 
 body {
   font-family: 'Roboto', sans-serif;
-	min-width: 400px;
 	background-color: #f4f7fc;
 }
 
@@ -46,5 +45,11 @@ a {
 @media(max-width: 1050px) {
 	.app {
 		margin: 31px;
+	}
+}
+
+@media (max-width: 500px) {
+	.app {
+		margin: 0px 15px 15px 15px;
 	}
 }

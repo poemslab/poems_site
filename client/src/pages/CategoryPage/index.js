@@ -37,8 +37,14 @@ class CategoryPage extends Component {
               )) : <p>Стихи не найдены</p>
             }
           </div>
-          <div>
-            stata
+          <div className={styles.grid_stats}>
+            <div className={styles.stats}>
+              <h5> { this.props.match.params.name } </h5>
+              <hr/>
+              <div>
+                Кол-во стихов: <strong> { this.state.items.length } </strong>
+              </div>
+            </div>
           </div>
         </div>
       </div>

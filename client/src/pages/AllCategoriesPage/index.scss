@@ -2,14 +2,37 @@
   display: grid;
   grid-template-columns: 8fr 4fr;
   margin-top: 53px;
-  grid-column-gap: 43px;
   column-gap: 43px;
 }
 
 .stats {
   padding: 20px;
   background-color: #fff;
-  max-height: 100px;
   margin-top: 25px;
   border-radius: 15px;
+}
+
+@media (max-width: 500px) {
+  .margin {
+    margin-right: 0px;
+  }
+
+  .grid {
+    grid-template-columns: 0fr;
+    column-gap: 0px;
+    row-gap: 0px;
+    min-width: 100%;
+  }
+
+  
+  .left_grid {
+    grid-column: -3;
+    min-width: 100%;
+  }
+
+  .right_grid {
+    grid-row: 1;
+    grid-column: -3;
+    min-width: 100%;
+  }
 }

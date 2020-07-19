@@ -15,6 +15,7 @@ function AppNavbar(props) {
   const [open, setOpen] = useState(true)
   const sidebarRef = useRef(null)
   useEffect(() => {
+    resize()
     function handleClickOutside(event) {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
         if(window.innerWidth < 1050 && open) {
@@ -38,36 +39,41 @@ function AppNavbar(props) {
     }
   }, [])
 
+  function close() {
+    if(window.innerWidth > 1000) return
+    setOpen(false)
+  }
+
   return (
     <div>
       {
         open ?
           <div ref={sidebarRef} className={styles.sidebar}>
-            <NavLink to='/'><img src={require('../../assets/logo.png')} /></NavLink>
+            <NavLink onClick={close} to='/'><img src={require('../../assets/logo.png')} /></NavLink>
             <p>
               Главное меню
             </p>
             <ul>
-              <li><NavLink className='active' to='/'>Главная</NavLink></li>
-              <li><NavLink to='/categories'>Категории</NavLink></li>
+              <li><NavLink onClick={close} className='active' to='/'>Главная</NavLink></li>
+              <li><NavLink onClick={close} to='/categories'>Категории</NavLink></li>
               {/* <li><NavLink to='/'>Все текста</NavLink></li> */}
               {
                 props.logged ?
-                  <li><NavLink to='/createpoema'>Добавить стих</NavLink></li>
+                  <li><NavLink onClick={close} to='/createpoema'>Добавить стих</NavLink></li>
                   : null
               }
             </ul>
-            <p>
+            {/* <p>
               Мой профиль
             </p>
             <ul>
               <li><NavLink to='/'>Редактировать</NavLink></li>
-            </ul>
+            </ul> */}
             <div className={styles.bottom}>
               {
                 props.logged ?
                   <a onClick={logOut}>Выйти</a>
-                  : <NavLink to='/login'>Войти</NavLink>
+                  : <NavLink onClick={close} to='/login'>Войти</NavLink>
               }
             </div>
           </div>

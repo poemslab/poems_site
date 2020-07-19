@@ -20,11 +20,43 @@
   column-gap: 43px;
 }
 
+.stats {
+  padding: 20px;
+  background-color: #fff;
+  margin-top: 25px;
+  border-radius: 15px;
+
+  h5 {
+    text-transform: capitalize;
+  }
+}
+
 @media (min-width: 1209px) {
   .margin {
 
     &:nth-child(3n) {
       margin-right: 20px;
     }
+  }
+}
+
+@media (max-width: 500px) {
+  .margin {
+    margin-right: 0px;
+    min-width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 0fr;
+    column-gap: 0px;
+  }
+  
+  .page {
+    grid-column: -3;
+  }
+
+  .grid_stats {
+    grid-row: 1;
+    grid-column: -3;
   }
 }

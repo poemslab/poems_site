@@ -82,11 +82,14 @@ class PoemaPage extends Component {
 
         }
         <div className={styles.lyrics}>
-          {this.state.lyrics ?
+          {
+            this.state.lyrics ?
             this.state.lyrics.split(/(\n)|(↵)/g).map((r, i) => {
               if(r === '\n' || r === '↵' || r === undefined) return null
               return <p key={i}>{r}</p>
-            }) : null}
+            }) 
+            : null
+          }
         </div>
         <div className={styles.sticky}>
           <div className={styles.info}>

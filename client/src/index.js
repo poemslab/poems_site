@@ -9,8 +9,6 @@ import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './redux/rootReducer'
 import thunk from 'redux-thunk'
 
-import 'react-awesome-slider/dist/styles.css'
-
 const store = createStore(
   rootReducer,
   applyMiddleware(thunk)

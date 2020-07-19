@@ -25,7 +25,6 @@
 .info {
   box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  height: 300px;
   position: sticky;
   top: 0px;
   img {
@@ -59,11 +58,33 @@
 
 .btn_block {
   display: flex;
-  margin-top: 10px;
+  margin: 10px 0px;
   justify-content: space-between;
   align-items: center;
 }
 
 .btn {
   margin-right: 10px;
+}
+
+@media (max-width: 500px) {
+  .page {
+    margin: 0px;
+    grid-template-columns: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    column-gap: 0px;
+  }
+
+  .lyrics {
+    grid-column: -3;
+    min-width: 100%;
+    margin-top: 20px;
+  }
+
+  .sticky {
+    grid-row: 1;
+    grid-column: -3;
+    min-width: 100%;
+  }
 }

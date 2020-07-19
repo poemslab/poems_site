@@ -4,7 +4,7 @@ import Card from '../../components/Card'
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import Category from '../../components/Category'
-import AwesomeSlider from 'react-awesome-slider'
+import { Helmet } from 'react-helmet'
 
 export default class MainPage extends Component {
 
@@ -35,32 +35,20 @@ export default class MainPage extends Component {
   render() {
     return (
       <div className={styles.page}>
-        <div>
-          <AwesomeSlider
-            bullets={false}
-            className={styles.slider}
-          >
-            <div className={styles.alert}>
-              <div>
-                <div className={styles.alert_title}>
-                  А вы знали, что...
+        <Helmet>
+          <title>Лаборатория стихов</title>
+        </Helmet>
+        <div className={styles.left_column}>
+          <div className={`${styles.alert} ${styles[`alert--red`]}`}>
+            <div>
+              <div className={styles.alert_title}>
+                У нас есть приложение!
                 </div>
-                <div className={styles.alert_subtitle}>
-                  люди, которые <span className={styles.bold}>пользуются нашим, сайтом</span> на <span className={styles.bold}>99%</span> счастливeе тех людей, которые наш <span className={styles.bold}>сайт не используют!</span>
-                </div>
+              <div className={styles.alert_subtitle}>
+                установи наше приложение для более удобного взаимодействия с контентом по <a href="#">ссылке</a>
               </div>
             </div>
-            <div className={`${styles.alert} ${styles[`alert--red`]}`}>
-              <div>
-                <div className={styles.alert_title}>
-                  У нас есть приложение!
-                </div>
-                <div className={styles.alert_subtitle}>
-                  установи наше приложение для более удобного взаимодействия с контентом по <a href="#">ссылке</a>
-                </div>
-              </div>
-            </div>
-          </AwesomeSlider>
+          </div>
           <div>
             <div className={styles.section_title_block}>
               <span className={styles.section_title}>Рекомендуемые текста</span>
@@ -69,18 +57,20 @@ export default class MainPage extends Component {
             <div className={styles.favourite_section_cards}>
               {
                 this.state.poems.length > 0 ?
-                  this.state.poems.map(r => (<Card key={r._id} thumbnail={r.thumbnail} title={r.title} author={r.author} likes={r.likes} to={`/poema/${r._id}`} className={styles.card} />))
+                  this.state.poems.map(r => (
+                    <Card key={r._id} thumbnail={r.thumbnail} title={r.title} author={r.author} likes={r.likes} to={`/poema/${r._id}`} className={styles.card} />
+                  ))
                   : <p>Стихи не найдены</p>
               }
             </div>
           </div>
         </div>
-        <div>
+        <div className={styles.right_column}>
           <div>
             <div>
               <div className={styles.section_title_block}>
                 <span className={styles.section_title}>Популярные категории</span>
-                <NavLink to='/' className={styles.section_link}>Больше</NavLink>
+                <NavLink to='/categories' className={styles.section_link}>Больше</NavLink>
               </div>
               <div>
                 {

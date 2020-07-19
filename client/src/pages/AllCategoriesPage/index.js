@@ -25,7 +25,7 @@ export default class index extends Component {
   render() {
     return (
       <div className={styles.grid}>
-        <div>
+        <div className={styles.left_grid}>
           {
             this.state.data.length > 0 ?
             this.state.data.map(r => (
@@ -34,11 +34,13 @@ export default class index extends Component {
             : <p>Категории не найдены..</p>
           }
         </div>
-        <div className={styles.stats}>
-          <h5>Статистика категорий</h5>
-          <hr/>
-          <div>
-            Кол-во категорий: <strong> { this.state.data.length } </strong>
+        <div className={styles.right_grid}>
+          <div className={styles.stats}>
+            <h5>Статистика категорий</h5>
+            <hr/>
+            <div>
+              Кол-во категорий: <strong> { this.state.data.length } </strong>
+            </div>
           </div>
         </div>
       </div>
